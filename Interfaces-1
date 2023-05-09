@@ -1,0 +1,74 @@
+// Interfaz CocheCRUD
+// METODOS DE CocheCRUD save(),find() delete().
+
+
+import java.util.List;
+
+public class CocheCRUD {
+
+    private CocheDAO cocheDAO;
+
+    public CocheCRUD() {
+        cocheDAO = new CocheDAO();
+    }
+
+    public void agregarCoche(Coche coche) {
+        cocheDAO.agregarCoche(coche);
+    }
+
+    public List<Coche> listarCoches() {
+        List<Coche> coches = null;
+        coches = cocheDAO.listarCoches();
+        return coches;
+    }
+
+    public void actualizarCoche(Coche coche) {
+        cocheDAO.agregarCoche(coche);
+    }
+
+    public void eliminarCoche(int id) {
+        cocheDAO.eliminarCoche(id);
+    }
+
+}
+
+//  Clase Main 
+
+import java.util.List;
+
+public class Main {
+
+    public static void main(String[] args) {
+        CocheCRUD cocheCRUD = new CocheCRUD();
+
+        // Agregar un nuevo coche
+        Coche coche1 = new Coche();
+        cocheCRUD.agregarCoche(coche1);
+        System.out.println("Se agregó un nuevo coche: " + coche1);
+
+        // Listar todos los coches
+        List<Coche> coches = cocheCRUD.listarCoches();
+        System.out.println("Todos los coches en la base de datos:");
+        for (Coche coche : coches) {
+            System.out.println(coche);
+        }
+
+        // Actualizar un coche existente
+        Coche coche2 = coches.get(0);
+        coche2.setModelo("Camry");
+        cocheCRUD.actualizarCoche(coche2);
+        System.out.println("Se actualizó un coche existente: " + coche2);
+
+        // Eliminar un coche existente
+        Coche coche3 = coches.get(1);
+        cocheCRUD.eliminarCoche(coche3.getId());
+        System.out.println("Se eliminó un coche existente: " + coche3);
+
+        // Listar todos los coches después de la eliminación
+        coches = cocheCRUD.listarCoches();
+        System.out.println("Todos los coches en la base de datos después de la eliminación:");
+        for (Coche coche : coches) {
+            System.out.println(coche);
+        }
+    }
+}
